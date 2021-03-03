@@ -125,8 +125,26 @@
         },
         "metadata" : {
           "label" : "TotalByCustomer",
-          "x" : 659,
-          "y" : 140
+          "x" : 639,
+          "y" : 138
+        },
+        "ports" : {
+          "inputs" : [ "in" ],
+          "outputs" : [ "out" ]
+        },
+        "lineage" : ""
+      },
+      "Reformat0" : {
+        "component" : "Reformat",
+        "properties" : {
+          "interim" : true,
+          "cache" : false,
+          "functions" : [ ]
+        },
+        "metadata" : {
+          "label" : "Reformat0",
+          "x" : 921,
+          "y" : 137
         },
         "ports" : {
           "inputs" : [ "in" ],
@@ -174,11 +192,24 @@
         "route" : "e_BJcUxqhf_"
       },
       "lineage" : ""
+    }, {
+      "src" : {
+        "process" : "TotalByCustomer",
+        "port" : "out"
+      },
+      "tgt" : {
+        "process" : "Reformat0",
+        "port" : "in"
+      },
+      "metadata" : {
+        "route" : "e_H1Mne5nfO"
+      },
+      "lineage" : ""
     } ],
     "groups" : [ ],
     "locked" : false,
     "metainfo" : {
-      "lastUpdated" : 1614745757864,
+      "lastUpdated" : 1614745773029,
       "id" : "joinaggsort",
       "memory" : 1,
       "imported" : true,
