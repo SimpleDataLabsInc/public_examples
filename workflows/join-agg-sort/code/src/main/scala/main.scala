@@ -22,7 +22,7 @@ object Main {
     val df_Customer:          Source    = Customer(spark)
     val df_Orders:            Source    = Orders(spark)
     val df_ConnectByCustomer: Join      = ConnectByCustomer(spark, df_Customer, df_Orders)
-    val df_TotalbyCustomer:   Aggregate = TotalbyCustomer(spark,   df_ConnectByCustomer)
+    val df_TotalByCustomer:   Aggregate = TotalByCustomer(spark,   df_ConnectByCustomer)
 
   }
 
