@@ -23,6 +23,7 @@
       },
       "Orders" : {
         "component" : "Source",
+        "group" : null,
         "properties" : {
           "interim" : false,
           "cache" : false,
@@ -40,8 +41,9 @@
         },
         "lineage" : ""
       },
-      "Join0" : {
+      "ConnectByCustomer" : {
         "component" : "Join",
+        "group" : null,
         "properties" : {
           "joinType" : "inner",
           "joinCondition" : {
@@ -77,12 +79,56 @@
           "limit" : 0
         },
         "metadata" : {
-          "label" : "Join0",
+          "label" : "ConnectByCustomer",
           "x" : 405,
           "y" : 139
         },
         "ports" : {
           "inputs" : [ "left", "right" ],
+          "outputs" : [ "out" ]
+        },
+        "lineage" : ""
+      },
+      "TotalbyCustomer" : {
+        "component" : "Aggregate",
+        "properties" : {
+          "interim" : false,
+          "cache" : false,
+          "aggcols" : [ {
+            "targetCol" : "first_name",
+            "expression" : {
+              "format" : "sql",
+              "expr" : "max(first_name)"
+            }
+          }, {
+            "targetCol" : "last_name",
+            "expression" : {
+              "format" : "sql",
+              "expr" : "max(last_name)"
+            }
+          }, {
+            "targetCol" : "amount",
+            "expression" : {
+              "format" : "sql",
+              "expr" : "SUM(amount)"
+            }
+          } ],
+          "columns" : [ {
+            "targetCol" : "customer_id",
+            "expression" : {
+              "format" : "sql",
+              "expr" : "customer_id"
+            }
+          } ],
+          "opType" : "groupBy"
+        },
+        "metadata" : {
+          "label" : "TotalbyCustomer",
+          "x" : 661,
+          "y" : 141
+        },
+        "ports" : {
+          "inputs" : [ "in" ],
           "outputs" : [ "out" ]
         },
         "lineage" : ""
@@ -94,7 +140,7 @@
         "port" : "out"
       },
       "tgt" : {
-        "process" : "Join0",
+        "process" : "ConnectByCustomer",
         "port" : "left"
       },
       "metadata" : {
@@ -107,18 +153,31 @@
         "port" : "out"
       },
       "tgt" : {
-        "process" : "Join0",
+        "process" : "ConnectByCustomer",
         "port" : "right"
       },
       "metadata" : {
         "route" : "e_HJ2oRY2zO"
       },
       "lineage" : ""
+    }, {
+      "src" : {
+        "process" : "ConnectByCustomer",
+        "port" : "out"
+      },
+      "tgt" : {
+        "process" : "TotalbyCustomer",
+        "port" : "in"
+      },
+      "metadata" : {
+        "route" : "e_BJcUxqhf_"
+      },
+      "lineage" : ""
     } ],
     "groups" : [ ],
     "locked" : false,
     "metainfo" : {
-      "lastUpdated" : 1614745511410,
+      "lastUpdated" : 1614745711508,
       "id" : "joinaggsort",
       "memory" : 1,
       "imported" : true,
