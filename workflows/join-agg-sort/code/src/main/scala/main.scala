@@ -20,6 +20,8 @@ object Main {
   def graph(spark: SparkSession): Unit = {
 
     val df_Customer: Source = Customer(spark)
+    val df_Orders:   Source = Orders(spark)
+    val df_Join0:    Join   = Join0(spark, df_Customer, df_Orders)
 
   }
 
