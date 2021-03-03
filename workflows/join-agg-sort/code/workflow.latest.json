@@ -1,0 +1,42 @@
+{
+  "graph" : {
+    "processes" : {
+      "Customer" : {
+        "component" : "Source",
+        "properties" : {
+          "interim" : false,
+          "cache" : false,
+          "id" : "877",
+          "version" : 0
+        },
+        "metadata" : {
+          "label" : "Customer",
+          "x" : 94,
+          "y" : 125
+        },
+        "ports" : {
+          "inputs" : [ ],
+          "outputs" : [ "out" ]
+        },
+        "lineage" : ""
+      }
+    },
+    "connections" : [ ],
+    "groups" : [ ],
+    "locked" : false,
+    "metainfo" : {
+      "lastUpdated" : 1614745094478,
+      "id" : "joinaggsort",
+      "memory" : 1,
+      "imported" : true,
+      "language" : "scala",
+      "processors" : 1,
+      "cluster" : "local",
+      "mode" : "batch",
+      "interimMode" : "full",
+      "udfs" : null
+    },
+    "inports" : { },
+    "outports" : { }
+  }
+}
