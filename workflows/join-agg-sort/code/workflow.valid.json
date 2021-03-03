@@ -1,0 +1,226 @@
+{
+  "graph" : {
+    "processes" : {
+      "Customer" : {
+        "component" : "Source",
+        "group" : null,
+        "properties" : {
+          "interim" : false,
+          "cache" : false,
+          "id" : "877",
+          "version" : 0
+        },
+        "metadata" : {
+          "label" : "Customer",
+          "x" : 94,
+          "y" : 125
+        },
+        "ports" : {
+          "inputs" : [ ],
+          "outputs" : [ "out" ]
+        },
+        "lineage" : ""
+      },
+      "Orders" : {
+        "component" : "Source",
+        "group" : null,
+        "properties" : {
+          "interim" : false,
+          "cache" : false,
+          "id" : "878",
+          "version" : 0
+        },
+        "metadata" : {
+          "label" : "Orders",
+          "x" : 96,
+          "y" : 321
+        },
+        "ports" : {
+          "inputs" : [ ],
+          "outputs" : [ "out" ]
+        },
+        "lineage" : ""
+      },
+      "ConnectByCustomer" : {
+        "component" : "Join",
+        "group" : null,
+        "properties" : {
+          "joinType" : "inner",
+          "joinCondition" : {
+            "expr" : "left_customer_id = right_customer_id",
+            "format" : "sql"
+          },
+          "selectColumns" : [ {
+            "targetCol" : "first_name",
+            "expression" : {
+              "expr" : "left.first_name",
+              "format" : "sql"
+            }
+          }, {
+            "targetCol" : "last_name",
+            "expression" : {
+              "expr" : "left.last_name",
+              "format" : "sql"
+            }
+          }, {
+            "targetCol" : "amount",
+            "expression" : {
+              "expr" : "right.amount",
+              "format" : "sql"
+            }
+          }, {
+            "targetCol" : "customer_id",
+            "expression" : {
+              "expr" : "left.customer_id",
+              "format" : "sql"
+            }
+          } ],
+          "udf_definitions" : [ ],
+          "limit" : 0
+        },
+        "metadata" : {
+          "label" : "ConnectByCustomer",
+          "x" : 405,
+          "y" : 139
+        },
+        "ports" : {
+          "inputs" : [ "left", "right" ],
+          "outputs" : [ "out" ]
+        },
+        "lineage" : ""
+      },
+      "TotalByCustomer" : {
+        "component" : "Aggregate",
+        "group" : null,
+        "properties" : {
+          "interim" : false,
+          "cache" : false,
+          "aggcols" : [ {
+            "targetCol" : "first_name",
+            "expression" : {
+              "format" : "sql",
+              "expr" : "max(first_name)"
+            }
+          }, {
+            "targetCol" : "last_name",
+            "expression" : {
+              "format" : "sql",
+              "expr" : "max(last_name)"
+            }
+          }, {
+            "targetCol" : "amount",
+            "expression" : {
+              "format" : "sql",
+              "expr" : "SUM(amount)"
+            }
+          } ],
+          "columns" : [ {
+            "targetCol" : "customer_id",
+            "expression" : {
+              "format" : "sql",
+              "expr" : "customer_id"
+            }
+          } ],
+          "opType" : "groupBy"
+        },
+        "metadata" : {
+          "label" : "TotalByCustomer",
+          "x" : 639,
+          "y" : 138
+        },
+        "ports" : {
+          "inputs" : [ "in" ],
+          "outputs" : [ "out" ]
+        },
+        "lineage" : ""
+      },
+      "Reformat0" : {
+        "component" : "Reformat",
+        "properties" : {
+          "interim" : true,
+          "cache" : false,
+          "functions" : [ ]
+        },
+        "metadata" : {
+          "label" : "Reformat0",
+          "x" : 921,
+          "y" : 137
+        },
+        "ports" : {
+          "inputs" : [ "in" ],
+          "outputs" : [ "out" ]
+        },
+        "lineage" : ""
+      }
+    },
+    "connections" : [ {
+      "src" : {
+        "process" : "Customer",
+        "port" : "out"
+      },
+      "tgt" : {
+        "process" : "ConnectByCustomer",
+        "port" : "left"
+      },
+      "metadata" : {
+        "route" : "e_HJwjRt2GO"
+      },
+      "lineage" : ""
+    }, {
+      "src" : {
+        "process" : "Orders",
+        "port" : "out"
+      },
+      "tgt" : {
+        "process" : "ConnectByCustomer",
+        "port" : "right"
+      },
+      "metadata" : {
+        "route" : "e_HJ2oRY2zO"
+      },
+      "lineage" : ""
+    }, {
+      "src" : {
+        "process" : "ConnectByCustomer",
+        "port" : "out"
+      },
+      "tgt" : {
+        "process" : "TotalByCustomer",
+        "port" : "in"
+      },
+      "metadata" : {
+        "route" : "e_BJcUxqhf_"
+      },
+      "lineage" : ""
+    }, {
+      "src" : {
+        "process" : "TotalByCustomer",
+        "port" : "out"
+      },
+      "tgt" : {
+        "process" : "Reformat0",
+        "port" : "in"
+      },
+      "metadata" : {
+        "route" : "e_H1Mne5nfO"
+      },
+      "lineage" : ""
+    } ],
+    "groups" : [ ],
+    "locked" : false,
+    "metainfo" : {
+      "lastUpdated" : 1614745773029,
+      "id" : "joinaggsort",
+      "memory" : 1,
+      "imported" : true,
+      "language" : "scala",
+      "processors" : 1,
+      "cluster" : "local",
+      "mode" : "batch",
+      "interimMode" : "full",
+      "udfs" : null
+    },
+    "inports" : { },
+    "outports" : { }
+  }
+}
