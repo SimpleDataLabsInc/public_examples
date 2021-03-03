@@ -125,8 +125,8 @@
         },
         "metadata" : {
           "label" : "TotalByCustomer",
-          "x" : 661,
-          "y" : 141
+          "x" : 659,
+          "y" : 140
         },
         "ports" : {
           "inputs" : [ "in" ],
@@ -178,7 +178,7 @@
     "groups" : [ ],
     "locked" : false,
     "metainfo" : {
-      "lastUpdated" : 1614745721750,
+      "lastUpdated" : 1614745726143,
       "id" : "joinaggsort",
       "memory" : 1,
       "imported" : true,
